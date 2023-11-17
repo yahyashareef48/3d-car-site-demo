@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
 import Canvas from "@/canvas";
-import { Intro, Navbar } from "@/components";
+import { Edit, Intro, Navbar } from "@/components";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function Home() {
+  const searchParam = useSearchParams();  
 
-  const [intro, setIntro] = useState(true);
+  const [color, setColor] = useState("");
 
   return (
     <main className="relative w-full h-screen">
       <Navbar />
-      <div className="z-10 w-full h-full bg-[#0000006d]">
-        {intro && <Intro />}
-      </div>
-      <div className="h-full absolute -z-10 w-full top-0 left-0">
+      {!searchParam.get("edit") ? <Intro /> : <Edit color={color} setColor={setColor} />}
+      <div className="z-0 h-full absolute w-full top-0 left-0">
         <Canvas />
       </div>
     </main>

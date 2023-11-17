@@ -13,7 +13,7 @@ export default function Index() {
         minDistance={3.5}
         maxDistance={4}
         minPolarAngle={Math.PI / 4}
-        maxPolarAngle={Math.PI / 1.5}
+        maxPolarAngle={Math.PI / 1.9}
       />
       <Center>
         <MclarenP1 />
