@@ -8,12 +8,10 @@ import { useState } from "react";
 export default function Home() {
   const searchParam = useSearchParams();  
 
-  const [color, setColor] = useState("");
-
   return (
     <main className="relative w-full h-screen">
       <Navbar />
-      {!searchParam.get("edit") ? <Intro /> : <Edit color={color} setColor={setColor} />}
+      {!searchParam.get("edit") ? <Intro /> : <Edit/>}
       <div className="z-0 h-full absolute w-full top-0 left-0">
         <Canvas />
       </div>
