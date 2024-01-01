@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useSearchParams, useRouter } from "next/navigation";
 
 export default function MclarenP1() {
+  const router = useRouter();
   const [materialName, setMaterialName] = useState(""); // Initialize state for the material name
   const coolDown = useRef(false);
 
@@ -24,6 +25,12 @@ export default function MclarenP1() {
       }
     }
   });
+
+  useEffect(() => {
+    let params = new URLSearchParams(window.location.search);
+    params.set("l", "false");
+    router.push(`?${params.toString()}`);
+  }, []);
 
   // Return the JSX for rendering
   return (
@@ -45,10 +52,9 @@ export default function MclarenP1() {
       }}
     >
       {/* Define the lights for the scene */}
-      <ambientLight intensity={0.3} />
+      <ambientLight intensity={1} />
       <directionalLight position={[10, 10, 5]} intensity={1} />
-      <directionalLight position={[-10, -10, -5]} intensity={0.5} />
-      <pointLight position={[0, 10, 0]} intensity={0.3} />
+      <pointLight position={[0, 10, 0]} intensity={1} />
       {/* Render the GLTF model */}
       <primitive object={gltf.scene} />
     </mesh>

@@ -17,8 +17,12 @@ export default function Intro() {
             </p>
             <div className="mt-4">
               <button
-                className=" bg-[#181a1b] px-5 py-3 rounded-full"
-                onClick={() => router.push("/?edit=true")}
+                className="bg-[#181a1b] px-5 py-3 rounded-full"
+                onClick={() => {
+                  let params = new URLSearchParams(window.location.search);
+                  params.set("edit", "true");
+                  router.push(`?${params.toString()}`);
+                }}
               >
                 Start 3D Experience
               </button>
