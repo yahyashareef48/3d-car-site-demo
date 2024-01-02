@@ -31,7 +31,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             className="z-50 absolute top-0 bg-black w-screen h-screen flex justify-center items-center"
           >
-            <img className="animate-pulse h-44" src="/images/LOGO.webp" alt="logo" />
+            <img className="animate-pulse h-32" src="/images/LOGO.webp" alt="logo" />
           </motion.div>
         )}
       </AnimatePresence>
