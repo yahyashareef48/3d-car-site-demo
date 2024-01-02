@@ -11,11 +11,12 @@
   "dependencies": {
     "@react-three/drei": "^9.88.14",
     "@react-three/fiber": "^8.15.11",
+    "@types/react-color": "^3.0.10",
     "@types/three": "^0.158.2",
     "framer-motion": "^10.16.16",
     "next": "14.0.2",
     "react": "^18",
-    "react-color-picker-tool": "^0.0.6",
+    "react-color": "^2.19.3",
     "react-dom": "^18",
     "three": "^0.158.0"
   },

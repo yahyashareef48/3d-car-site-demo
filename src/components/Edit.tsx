@@ -1,23 +1,26 @@
 "use client";
 
-import { ReactColorPicker } from "react-color-picker-tool";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ChromePicker } from "react-color";
 
 export default function Edit() {
   const router = useRouter();
-  const searchParam = useSearchParams();
-  const color: any = searchParam.get("color");
+  const [color, setColor] = useState("");
 
   return (
-    <div className="absolute text-black font-serif top-10 left-0 z-10">
-      <ReactColorPicker
-        color={color}
-        onChange={(colors) => {
+    <div className="absolute text-black font-bold top-10 left-0 z-10">
+      <ChromePicker
+        // @ts-ignore
+        width={300}
+        color={color ? color : "#fff"}
+        onChangeComplete={(c) => {
+          setColor(c.hex);
           let params = new URLSearchParams(window.location.search);
-          params.set("color", colors.hex);
+          params.set("color", c.hex.replace("#", ""));
           router.push(`?${params.toString()}`);
         }}
-      ></ReactColorPicker>
+      />
     </div>
   );
 }
