@@ -11,6 +11,9 @@ export default function Home() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
+  const isLoading = loading || searchParam.get("l") == "true" || searchParam.get("l") == null;
+  const isIntro = searchParam.get("edit") === "false" || null;
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -22,9 +25,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative w-full h-screen">
+    <main className="relative w-full h-screen overflow-hidden">
       <AnimatePresence>
-        {(loading || searchParam.get("l") == "true" || searchParam.get("l") == null) && (
+        {isLoading && (
           <motion.div
             exit={{ opacity: 0 }}
             initial={{ opacity: 1 }}
@@ -37,7 +40,7 @@ export default function Home() {
       </AnimatePresence>
 
       <Navbar />
-      {!searchParam.get("edit") ? <Intro /> : <Edit />}
+      <AnimatePresence>{isIntro ? <Intro /> : <Edit />}</AnimatePresence>
       <div className="z-0 h-full absolute w-full top-0 left-0">
         <Canvas />
       </div>

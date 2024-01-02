@@ -3,13 +3,20 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChromePicker } from "react-color";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Edit() {
   const router = useRouter();
   const [color, setColor] = useState("");
 
   return (
-    <div className="absolute text-black font-bold top-10 left-0 z-10">
+    <motion.div
+      initial={{ x: -100 }} // start from the left
+      animate={{ x: 0 }} // end at the current position
+      exit={{ x: -100 }} // exit to the left
+      key="edit"
+      className="absolute text-black font-bold top-10 left-0 z-10"
+    >
       <ChromePicker
         // @ts-ignore
         width={300}
@@ -21,6 +28,6 @@ export default function Edit() {
           router.push(`?${params.toString()}`);
         }}
       />
-    </div>
+    </motion.div>
   );
 }

@@ -1,12 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function Intro() {
   const router = useRouter();
 
   return (
-    <div className="absolute top-0 left-0 z-10 w-full h-full bg-[#0000006d]">
+    <motion.div
+      initial={{ x: -100 }} // start from the left
+      animate={{ x: 0 }} // end at the current position
+      exit={{ x: -100 }} // exit to the left
+      key="intro"
+      className="absolute top-0 left-0 z-10 w-full h-full bg-[#0000006d]"
+    >
       <div className="grid items-center h-full ">
         <div className="max-w-2xl flex justify-end">
           <div className="max-w-xl p-4">
@@ -30,6 +37,6 @@ export default function Intro() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
