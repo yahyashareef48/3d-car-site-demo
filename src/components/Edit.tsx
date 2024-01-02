@@ -15,7 +15,7 @@ export default function Edit() {
       animate={{ x: 0 }} // end at the current position
       exit={{ x: -100 }} // exit to the left
       key="edit"
-      className="absolute text-black font-bold top-10 left-0 z-10"
+      className="absolute text-black top-10 left-0 z-10 color-picker"
     >
       <ChromePicker
         // @ts-ignore
