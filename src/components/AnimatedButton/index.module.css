@@ -1,6 +1,7 @@
 .button {
   position: relative;
   background-color: orange;
+  width: 100%;
   padding: 0.8rem 2rem;
   border-radius: 4px;
   transition: ease-out 0.3s;
