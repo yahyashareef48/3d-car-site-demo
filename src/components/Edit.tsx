@@ -14,7 +14,6 @@ export default function Edit() {
       initial={{ x: -100 }} // start from the left
       animate={{ x: 0 }} // end at the current position
       exit={{ x: -100 }} // exit to the left
-      key="edit"
       className="absolute text-black top-10 left-0 z-10 color-picker"
     >
       <ChromePicker

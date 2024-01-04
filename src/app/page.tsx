@@ -12,7 +12,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   const isLoading = loading || searchParam.get("l") == "true" || searchParam.get("l") == null;
-  const isIntro = searchParam.get("edit") === "false" || null;
+  const isIntro = searchParam.get("edit") === "false" || searchParam.get("edit") === null;
 
   useEffect(() => {
     setTimeout(() => {
