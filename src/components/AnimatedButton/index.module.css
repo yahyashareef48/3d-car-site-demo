@@ -1,23 +1,25 @@
 .button {
+  margin-top: 0.5rem;
   position: relative;
-  background-color: orange;
+  background-color: transparent;
   width: 100%;
   padding: 0.8rem 2rem;
   border-radius: 4px;
   transition: ease-out 0.3s;
   font-size: 1rem;
   z-index: 1;
+  border: solid 2.5px #181a1b;
+  color: white;
 }
-
+/* bg-[#181a1b] px-5 py-3 */
 .button::before {
   content: "";
-  border-radius: 4px;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: red;
+  background-color: #181a1b;
   z-index: -1;
   transform: scaleX(0);
   transition: ease-in-out 0.15s;
