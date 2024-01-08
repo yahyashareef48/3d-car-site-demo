@@ -11,7 +11,7 @@ export default function Index() {
       <ambientLight />
       <OrbitControls />
       <Center>
-        <Stage environment="forest">
+        <Stage environment="city">
           <TeslaModel3 />
         </Stage>
       </Center>
