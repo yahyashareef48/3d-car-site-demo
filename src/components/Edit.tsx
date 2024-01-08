@@ -34,18 +34,19 @@ export default function Edit() {
       className="color-picker absolute text-black flex items-center h-full z-10"
       style={{ pointerEvents: "none" }}
     >
-      <div className="h-max min-h-[285px] min-w-[285px] relative flex items-center">
+      <div className="h-max relative flex items-center">
         <div className="absolute" style={{ pointerEvents: "auto" }}>
           <AnimatePresence>
             {isFirstOptionsOpen && (
               <motion.div initial={{ x: -500 }} animate={{ x: 10 }} exit={{ x: -500 }}>
-                <AnimatedButton onClick={() => setColorPicker(true)}>
-                  Open Color Selector
-                </AnimatedButton>
-
-                <AnimatedButton onClick={() => setEnvironmentPicker(true)}>
-                  Select Environment
-                </AnimatedButton>
+                <div className="h-max min-w-[285px] flex flex-col gap-2">
+                  <AnimatedButton onClick={() => setColorPicker(true)}>
+                    Open Color Selector
+                  </AnimatedButton>
+                  <AnimatedButton onClick={() => setEnvironmentPicker(true)}>
+                    Select Environment
+                  </AnimatedButton>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -79,7 +80,7 @@ export default function Edit() {
                     <AnimatedButton right onClick={() => setEnvironmentPicker(false)}>
                       Close Color Picker
                     </AnimatedButton>
-                    <div className="overFlow-y-box overflow-y-scroll mt-2 max-h-[80vh] min-w-[285px] flex flex-col gap-2">
+                    <div className="overFlow-y-box overflow-y-scroll mt-2 max-h-[50vh] min-w-[285px] flex flex-col gap-2">
                       {environments.map((e) => (
                         <AnimatedButton
                           onClick={() => {
