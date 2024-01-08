@@ -6,6 +6,7 @@ import { ChromePicker } from "react-color";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { AnimatedButton } from "../components";
+import { EnvironmentsType } from "@/canvas";
 
 export default function Edit() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function Edit() {
   const environments = [
     "Apartment",
     "City",
-    "Down",
+    "Dawn",
     "Forest",
     "Lobby",
     "Night",
@@ -27,10 +28,6 @@ export default function Edit() {
     "Sunset",
     "Warehouse",
   ];
-
-  console.log(isFirstOptionsOpen);
-  console.log(colorPicker);
-  console.log(environmentPicker);
 
   return (
     <div
