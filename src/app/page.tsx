@@ -1,5 +1,6 @@
 "use client";
 
+import { Analytics } from "@vercel/analytics/react";
 import Canvas from "@/canvas";
 import { Edit, Intro, Navbar } from "@/components";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -26,6 +27,8 @@ export default function Home() {
 
   return (
     <main className="relative w-full h-screen overflow-hidden">
+      <Analytics />
+
       <AnimatePresence>
         {isLoading && (
           <motion.div
