@@ -37,7 +37,7 @@ export default function TeslaModel3() {
     // Define a mesh component
     <mesh
       // Set the onClick handler to update the material name state
-      onClick={(e: any) => {
+      onDoubleClick={(e: any) => {
         // Check if the cool down period is not active
         if (!coolDown.current) {
           setMaterialName(e.object.material.name); // If not in cooldown, set the material name state to the name of the clicked object's material
