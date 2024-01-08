@@ -8,6 +8,9 @@
   font-size: 1rem;
   z-index: 1;
   border: solid 2.5px #181a1b;
+  background-color: hsl(200, 6%, 10%, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: white;
 }
 /* bg-[#181a1b] px-5 py-3 */

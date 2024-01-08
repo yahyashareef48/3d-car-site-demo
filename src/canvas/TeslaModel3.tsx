@@ -30,6 +30,8 @@ export default function TeslaModel3() {
     let params = new URLSearchParams(window.location.search);
     params.set("l", "false");
     router.push(`?${params.toString()}`);
+
+    gltf.scene.rotation.set(0, 3, 0); // Rotate the mesh by 90 degrees on the Z-axis
   }, []);
 
   // Return the JSX for rendering
