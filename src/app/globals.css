@@ -31,3 +31,12 @@ body * {
 .color-picker * {
   font-family: sans-serif;
 }
+
+.overFlow-y-box {
+  border-top: solid 2.5px #181a1b;
+  border-bottom: solid 2.5px #181a1b;
+  border-radius: 6px;
+}
+.overFlow-y-box::-webkit-scrollbar {
+  display: none;
+}

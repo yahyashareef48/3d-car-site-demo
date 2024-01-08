@@ -34,7 +34,7 @@ export default function Edit() {
 
   return (
     <div
-      className="absolute text-black flex items-center h-full z-10 color-picker"
+      className="color-picker absolute text-black flex items-center h-full z-10"
       style={{ pointerEvents: "none" }}
     >
       <div className="h-max min-h-[285px] min-w-[285px] relative flex items-center">
@@ -78,22 +78,23 @@ export default function Edit() {
                 )}
 
                 {environmentPicker && (
-                  <div className="overflow-y-scroll">
+                  <div>
                     <AnimatedButton right onClick={() => setEnvironmentPicker(false)}>
                       Close Color Picker
                     </AnimatedButton>
-
-                    {environments.map((e) => (
-                      <AnimatedButton
-                        onClick={() => {
-                          let params = new URLSearchParams(window.location.search);
-                          params.set("e", e.toLowerCase());
-                          router.push(`?${params.toString()}`);
-                        }}
-                      >
-                        {e}
-                      </AnimatedButton>
-                    ))}
+                    <div className="overFlow-y-box overflow-y-scroll mt-2 max-h-[80vh] min-w-[285px] flex flex-col gap-2">
+                      {environments.map((e) => (
+                        <AnimatedButton
+                          onClick={() => {
+                            let params = new URLSearchParams(window.location.search);
+                            params.set("e", e.toLowerCase());
+                            router.push(`?${params.toString()}`);
+                          }}
+                        >
+                          {e}
+                        </AnimatedButton>
+                      ))}
+                    </div>
                   </div>
                 )}
               </motion.div>
