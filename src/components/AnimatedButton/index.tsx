@@ -7,7 +7,15 @@ type ButtonTypes = {
 };
 
 export default function AnimatedButton({ right = false, children, onClick }: ButtonTypes) {
-  return (
+  return innerWidth > 1024 ? (
+    <button
+      className={`${styles.button} ${right ? styles.right : styles.left}`}
+      style={{ pointerEvents: "auto" }}
+      onClick={() => onClick()}
+    >
+      {children}
+    </button>
+  ) : (
     <button
       className={`${styles.button} ${right ? styles.right : styles.left}`}
       style={{ pointerEvents: "auto" }}

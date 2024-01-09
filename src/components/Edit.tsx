@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { ChromePicker } from "react-color";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,12 +10,14 @@ import { EnvironmentsType } from "@/canvas";
 
 export default function Edit() {
   const router = useRouter();
+  const searchParam = useSearchParams();
   const [color, setColor] = useState("");
   const [colorPicker, setColorPicker] = useState(false);
   const [environmentPicker, setEnvironmentPicker] = useState(false);
   const [backgroundEnable, setBackgroundEnable] = useState(false);
 
   const isFirstOptionsOpen = !colorPicker && !environmentPicker;
+  const isBackgroundEnable = searchParam.get("bg") && searchParam.get("bg") === "true";
 
   const environments = [
     "Apartment",
@@ -40,13 +42,34 @@ export default function Edit() {
           <AnimatePresence>
             {isFirstOptionsOpen && (
               <motion.div initial={{ x: -500 }} animate={{ x: 10 }} exit={{ x: -500 }}>
-                <div className="h-max min-w-[285px] flex flex-col gap-2">
-                  <AnimatedButton onClick={() => setColorPicker(true)}>
-                    Open Color Picker
-                  </AnimatedButton>
-                  <AnimatedButton onClick={() => setEnvironmentPicker(true)}>
-                    Select Environment
-                  </AnimatedButton>
+                <div className="h-max min-w-max flex flex-col gap-2">
+                  {innerWidth > 576 ? (
+                    <>
+                      <AnimatedButton onClick={() => setColorPicker(true)}>
+                        Color Picker
+                      </AnimatedButton>
+                      <AnimatedButton onClick={() => setEnvironmentPicker(true)}>
+                        Environments
+                      </AnimatedButton>
+                    </>
+                  ) : (
+                    <>
+                      <button onClick={() => setColorPicker(true)}>
+                        <img
+                          className="w-14"
+                          src="/images/color-wheel.webp"
+                          alt="Open Color Picker"
+                        />
+                      </button>
+                      <button onClick={() => setEnvironmentPicker(true)}>
+                        <img
+                          className="w-14"
+                          src="/images/environment.webp"
+                          alt="Select Environments"
+                        />
+                      </button>
+                    </>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -58,7 +81,7 @@ export default function Edit() {
             {!isFirstOptionsOpen && (
               <motion.div initial={{ x: -500 }} animate={{ x: 10 }} exit={{ x: -500 }}>
                 {colorPicker && (
-                  <div>
+                  <div className="flex flex-col gap-1">
                     <ChromePicker
                       // @ts-ignore
                       width={300}
@@ -77,9 +100,9 @@ export default function Edit() {
                 )}
 
                 {environmentPicker && (
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 min-w-max">
                     <AnimatedButton right onClick={() => setEnvironmentPicker(false)}>
-                      Close Environment Selector
+                      Go Back
                     </AnimatedButton>
 
                     <AnimatedButton
@@ -90,10 +113,10 @@ export default function Edit() {
                         setBackgroundEnable(!backgroundEnable);
                       }}
                     >
-                      {backgroundEnable ? "Disable" : "Enable"} Background
+                      {isBackgroundEnable ? "Disable" : "Enable"} Background
                     </AnimatedButton>
 
-                    <div className="overFlow-y-box overflow-y-scroll max-h-[50vh] min-w-[285px] flex flex-col gap-2">
+                    <div className="overFlow-y-box overflow-y-scroll max-h-[50vh] flex flex-col gap-2">
                       {environments.map((e) => (
                         <AnimatedButton
                           onClick={() => {
