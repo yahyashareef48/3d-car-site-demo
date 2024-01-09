@@ -42,7 +42,11 @@ export default function Edit() {
           <AnimatePresence>
             {isFirstOptionsOpen && (
               <motion.div initial={{ x: -500 }} animate={{ x: 10 }} exit={{ x: -500 }}>
-                <div className="h-max min-w-max flex flex-col gap-2">
+                <div
+                  className={`h-max min-w-max flex flex-col ${
+                    innerWidth > 576 ? "gap-2" : "gap-3"
+                  }`}
+                >
                   {innerWidth > 576 ? (
                     <>
                       <AnimatedButton onClick={() => setColorPicker(true)}>
