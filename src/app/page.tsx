@@ -43,7 +43,9 @@ export default function Home() {
       </AnimatePresence>
 
       <Navbar />
+
       <AnimatePresence>{isIntro ? <Intro /> : <Edit />}</AnimatePresence>
+
       <div className="z-0 h-full absolute w-full top-0 left-0">
         <Canvas />
       </div>

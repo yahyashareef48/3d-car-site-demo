@@ -13,6 +13,7 @@ export default function Edit() {
   const [color, setColor] = useState("");
   const [colorPicker, setColorPicker] = useState(false);
   const [environmentPicker, setEnvironmentPicker] = useState(false);
+  const [backgroundEnable, setBackgroundEnable] = useState(false);
 
   const isFirstOptionsOpen = !colorPicker && !environmentPicker;
 
@@ -41,7 +42,7 @@ export default function Edit() {
               <motion.div initial={{ x: -500 }} animate={{ x: 10 }} exit={{ x: -500 }}>
                 <div className="h-max min-w-[285px] flex flex-col gap-2">
                   <AnimatedButton onClick={() => setColorPicker(true)}>
-                    Open Color Selector
+                    Open Color Picker
                   </AnimatedButton>
                   <AnimatedButton onClick={() => setEnvironmentPicker(true)}>
                     Select Environment
@@ -76,11 +77,23 @@ export default function Edit() {
                 )}
 
                 {environmentPicker && (
-                  <div>
+                  <div className="flex flex-col gap-2">
                     <AnimatedButton right onClick={() => setEnvironmentPicker(false)}>
-                      Close Color Picker
+                      Close Environment Selector
                     </AnimatedButton>
-                    <div className="overFlow-y-box overflow-y-scroll mt-2 max-h-[50vh] min-w-[285px] flex flex-col gap-2">
+
+                    <AnimatedButton
+                      onClick={() => {
+                        let params = new URLSearchParams(window.location.search);
+                        params.set("bg", (!backgroundEnable).toString());
+                        router.push(`?${params.toString()}`);
+                        setBackgroundEnable(!backgroundEnable);
+                      }}
+                    >
+                      {backgroundEnable ? "Disable" : "Enable"} Background
+                    </AnimatedButton>
+
+                    <div className="overFlow-y-box overflow-y-scroll max-h-[50vh] min-w-[285px] flex flex-col gap-2">
                       {environments.map((e) => (
                         <AnimatedButton
                           onClick={() => {
