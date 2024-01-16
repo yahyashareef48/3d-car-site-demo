@@ -120,7 +120,7 @@ export default function Edit() {
                       {isBackgroundEnable ? "Disable" : "Enable"} Background
                     </AnimatedButton>
 
-                    <div className="overFlow-y-box overflow-y-scroll max-h-[50vh] flex flex-col gap-2">
+                    <div className="overflow-y-box overflow-y-scroll max-h-[50vh] flex flex-col gap-2">
                       {environments.map((e) => (
                         <AnimatedButton
                           onClick={() => {

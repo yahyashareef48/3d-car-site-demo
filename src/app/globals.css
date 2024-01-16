@@ -33,11 +33,12 @@ body * {
   font-family: sans-serif;
 }
 
-.overFlow-y-box {
-  border-top: solid 2.5px #181a1b;
-  border-bottom: solid 2.5px #181a1b;
+.overflow-y-box {
+  border: solid 2.5px #181a1b;
+  /* border-bottom: solid 2.5px #181a1b; */
+  padding: 0.2rem;
   border-radius: 6px;
 }
-.overFlow-y-box::-webkit-scrollbar {
+.overflow-y-box::-webkit-scrollbar {
   display: none;
 }
