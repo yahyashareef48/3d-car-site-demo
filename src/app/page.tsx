@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 100);
+    }, 1000);
 
     let params = new URLSearchParams(window.location.search);
     params.set("l", "true");
