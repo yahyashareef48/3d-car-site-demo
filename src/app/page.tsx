@@ -6,6 +6,7 @@ import { Edit, Intro, Navbar } from "@/components";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Home() {
   const searchParam = useSearchParams();
@@ -37,7 +38,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             className="z-50 absolute top-0 bg-black w-screen h-screen flex justify-center items-center"
           >
-            <img className="animate-pulse h-32" src="/images/LOGO.webp" alt="logo" />
+            <LoadingScreen />
           </motion.div>
         )}
       </AnimatePresence>
