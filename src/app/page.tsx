@@ -17,10 +17,6 @@ export default function Home() {
   const isIntro = searchParam.get("edit") === "false" || searchParam.get("edit") === null;
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
     let params = new URLSearchParams(window.location.search);
     params.set("l", "true");
     router.push(`?${params.toString()}`);
@@ -38,7 +34,13 @@ export default function Home() {
             animate={{ opacity: 1 }}
             className="z-50 absolute top-0 bg-black w-screen h-screen flex justify-center items-center"
           >
-            <LoadingScreen />
+            <LoadingScreen
+              onLoad={() =>
+                setTimeout(() => {
+                  setLoading(false);
+                }, 2500)
+              }
+            />
           </motion.div>
         )}
       </AnimatePresence>
