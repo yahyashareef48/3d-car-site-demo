@@ -8,16 +8,24 @@ import Image from "next/image";
 import { AnimatedButton } from "../components";
 import { EnvironmentsType } from "@/canvas";
 
+import ArrowUpSolid from "../../public/icons/AngleUpSolid";
+
+type editingOptionsType = {
+  colorPicker: boolean;
+  environmentPicker: boolean;
+  [key: string]: boolean | undefined;
+};
+
 export default function Edit() {
   const router = useRouter();
   const searchParam = useSearchParams();
   const [color, setColor] = useState("");
-  const [colorPicker, setColorPicker] = useState(false);
-  const [environmentPicker, setEnvironmentPicker] = useState(false);
   const [backgroundEnable, setBackgroundEnable] = useState(false);
-
-  const isFirstOptionsOpen = !colorPicker && !environmentPicker;
-  const isBackgroundEnable = searchParam.get("bg") && searchParam.get("bg") === "true";
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [editingOptions, setEditingOptions] = useState({
+    colorPicker: true,
+    environmentPicker: false,
+  });
 
   const environments = [
     "Apartment",
@@ -32,114 +40,91 @@ export default function Edit() {
     "Warehouse",
   ];
 
+  const handlePanel = (changeState: "colorPicker" | "environmentPicker" | "none" = "none") => {
+    setIsPanelOpen((prev) => !prev);
+    if (changeState !== "none") {
+      setEditingOptions((prev) => {
+        let newState: editingOptionsType = prev;
+        for (let key in prev) {
+          newState[key] = key === changeState;
+        }
+        return newState;
+      });
+    }
+  };
+
   return (
-    <div
-      className="color-picker absolute text-black flex items-center h-full z-10"
-      style={{ pointerEvents: "none" }}
-    >
-      <div className="h-max relative flex items-center">
-        <div className="absolute" style={{ pointerEvents: "auto" }}>
-          <AnimatePresence>
-            {isFirstOptionsOpen && (
-              <motion.div initial={{ x: -500 }} animate={{ x: 10 }} exit={{ x: -500 }}>
-                <div
-                  className={`h-max min-w-max flex flex-col ${
-                    innerWidth > 576 ? "gap-2" : "gap-3"
-                  }`}
-                >
-                  {innerWidth > 576 ? (
-                    <>
-                      <AnimatedButton onClick={() => setColorPicker(true)}>
-                        Color Picker
-                      </AnimatedButton>
-                      <AnimatedButton onClick={() => setEnvironmentPicker(true)}>
-                        Environments
-                      </AnimatedButton>
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={() => setColorPicker(true)}>
-                        <img
-                          className="w-14"
-                          src="/images/color-wheel.webp"
-                          alt="Open Color Picker"
-                        />
-                      </button>
-                      <button onClick={() => setEnvironmentPicker(true)}>
-                        <img
-                          className="w-14"
-                          src="/images/environment.webp"
-                          alt="Select Environments"
-                        />
-                      </button>
-                    </>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        <div className="absolute" style={{ pointerEvents: "auto" }}>
-          <AnimatePresence>
-            {!isFirstOptionsOpen && (
-              <motion.div initial={{ x: -500 }} animate={{ x: 10 }} exit={{ x: -500 }}>
-                {colorPicker && (
-                  <div className="flex flex-col gap-1">
-                    <ChromePicker
-                      // @ts-ignore
-                      width={300}
-                      color={color ? color : "#fff"}
-                      onChangeComplete={(c) => {
-                        setColor(c.hex);
-                        let params = new URLSearchParams(window.location.search);
-                        params.set("color", c.hex.replace("#", ""));
-                        router.push(`?${params.toString()}`);
-                      }}
-                    />
-                    <AnimatedButton right onClick={() => setColorPicker(false)}>
-                      Close Color Picker
-                    </AnimatedButton>
-                  </div>
-                )}
-
-                {environmentPicker && (
-                  <div className="flex flex-col gap-2 min-w-max">
-                    <AnimatedButton right onClick={() => setEnvironmentPicker(false)}>
-                      Go Back
-                    </AnimatedButton>
-
-                    <AnimatedButton
-                      onClick={() => {
-                        let params = new URLSearchParams(window.location.search);
-                        params.set("bg", (!backgroundEnable).toString());
-                        router.push(`?${params.toString()}`);
-                        setBackgroundEnable(!backgroundEnable);
-                      }}
-                    >
-                      {isBackgroundEnable ? "Disable" : "Enable"} Background
-                    </AnimatedButton>
-
-                    <div className="overflow-y-box overflow-y-scroll max-h-[50vh] flex flex-col gap-2">
-                      {environments.map((e) => (
-                        <AnimatedButton
-                          onClick={() => {
-                            let params = new URLSearchParams(window.location.search);
-                            params.set("e", e.toLowerCase());
-                            router.push(`?${params.toString()}`);
-                          }}
-                        >
-                          {e}
-                        </AnimatedButton>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+    <div className="fixed bottom-0 min-w-[100%] z-10">
+      <div className="bg-[#232323] rounded-t-2xl flex mx-auto gap-4 pt-4 px-4 max-w-max">
+        <button
+          className={`font-sans p-3 rounded-t-xl transition-colors ${
+            editingOptions.colorPicker && "bg-[#464646]"
+          }`}
+          onClick={() => handlePanel("colorPicker")}
+        >
+          Color picker
+        </button>
+        <button
+          className={`font-sans p-3 rounded-t-xl transition-colors ${
+            editingOptions.environmentPicker && "bg-[#464646]"
+          }`}
+          onClick={() => handlePanel("environmentPicker")}
+        >
+          Environment's
+        </button>
+        <button className="font-sans" onClick={() => handlePanel()}>
+          <ArrowUpSolid />
+        </button>
       </div>
+
+      {isPanelOpen && (
+        <div className="border-[#464646] border-2 bg-[#232323] max-h-72">
+          {editingOptions.colorPicker && (
+            <div className="flex flex-col gap-1">
+              <ChromePicker
+                // @ts-ignore
+                width={300}
+                color={color ? color : "#fff"}
+                onChangeComplete={(c) => {
+                  setColor(c.hex);
+                  let params = new URLSearchParams(window.location.search);
+                  params.set("color", c.hex.replace("#", ""));
+                  router.push(`?${params.toString()}`);
+                }}
+              />
+            </div>
+          )}
+
+          {editingOptions.environmentPicker && (
+            <div className="flex flex-col gap-2 min-w-max">
+              <AnimatedButton
+                onClick={() => {
+                  let params = new URLSearchParams(window.location.search);
+                  params.set("bg", (!backgroundEnable).toString());
+                  router.push(`?${params.toString()}`);
+                  setBackgroundEnable(!backgroundEnable);
+                }}
+              >
+                {backgroundEnable ? "Disable" : "Enable"} Background
+              </AnimatedButton>
+
+              <div className="overflow-y-box overflow-y-scroll max-h-[50vh] flex flex-col gap-2">
+                {environments.map((e) => (
+                  <AnimatedButton
+                    onClick={() => {
+                      let params = new URLSearchParams(window.location.search);
+                      params.set("e", e.toLowerCase());
+                      router.push(`?${params.toString()}`);
+                    }}
+                  >
+                    {e}
+                  </AnimatedButton>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

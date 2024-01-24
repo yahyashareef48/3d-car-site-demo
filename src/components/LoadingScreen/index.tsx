@@ -28,8 +28,6 @@ function ProgressBarComponent({ onLoad = () => {} }) {
     };
   }, []);
 
-  console.log(loadProgress <= 100);
-
   return (
     <div className="max-w-7xl w-[90%]">
       <h1 className="text-4xl font-sans font-thin max-w-fit mx-auto mb-6">
