@@ -40,22 +40,21 @@ export default function Edit() {
     "Warehouse",
   ];
 
-  const handlePanel = (changeState: "colorPicker" | "environmentPicker" | "none" = "none") => {
-    setIsPanelOpen((prev) => !prev);
-    if (changeState !== "none") {
-      setEditingOptions((prev) => {
-        let newState: editingOptionsType = prev;
-        for (let key in prev) {
-          newState[key] = key === changeState;
-        }
-        return newState;
-      });
-    }
+  const handlePanel = (changeState: "colorPicker" | "environmentPicker") => {
+    if (!isPanelOpen) setIsPanelOpen(true);
+
+    setEditingOptions((prev) => {
+      let newState: editingOptionsType = { ...prev };
+      for (let key in prev) {
+        newState[key] = key === changeState;
+      }
+      return newState;
+    });
   };
 
   return (
     <div className="fixed bottom-0 min-w-[100%] z-10">
-      <div className="bg-[#232323] rounded-t-2xl flex mx-auto gap-4 pt-4 px-4 max-w-max">
+      <div className="bg-[#232323] rounded-t-3xl flex mx-auto gap-4 pt-4 px-4 max-w-max">
         <button
           className={`font-sans p-3 rounded-t-xl transition-colors ${
             editingOptions.colorPicker && "bg-[#464646]"
@@ -64,6 +63,7 @@ export default function Edit() {
         >
           Color picker
         </button>
+
         <button
           className={`font-sans p-3 rounded-t-xl transition-colors ${
             editingOptions.environmentPicker && "bg-[#464646]"
@@ -72,13 +72,16 @@ export default function Edit() {
         >
           Environment's
         </button>
-        <button className="font-sans" onClick={() => handlePanel()}>
-          <ArrowUpSolid />
+
+        <button className="font-sans" onClick={() => setIsPanelOpen((prev) => !prev)}>
+          <ArrowUpSolid
+            className={`transition-transform duration-300 ${isPanelOpen && "rotate-180"}`}
+          />
         </button>
       </div>
 
       {isPanelOpen && (
-        <div className="border-[#464646] border-2 bg-[#232323] max-h-72">
+        <div className="border-[#464646] border-2 bg-[#232323] max-h-[30vh]">
           {editingOptions.colorPicker && (
             <div className="flex flex-col gap-1">
               <ChromePicker
