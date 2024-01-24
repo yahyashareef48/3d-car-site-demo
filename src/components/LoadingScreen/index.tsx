@@ -6,20 +6,39 @@ export default function LoadingScreen({ shapesLoader = false, onLoad = () => {} 
 }
 
 function ProgressBarComponent({ onLoad = () => {} }) {
-  const [startAnimation, setStartAnimation] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(10);
+  const [loadingDots, setLoadingDots] = useState(0);
+
+  const allDots = ["", ".", "..", "..."];
 
   useEffect(() => {
-    setStartAnimation(true);
+    const interval = setInterval(() => {
+      setLoadingDots((prev) => (prev >= 3 ? 0 : prev + 1));
+    }, 500);
+
+    const loadinBarInterval = setInterval(() => {
+      loadProgress <= 100 && setLoadProgress((prev) => (prev >= 100 ? 100 : prev + 1));
+    }, 10);
+
     onLoad();
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(loadinBarInterval);
+    };
   }, []);
+
+  console.log(loadProgress <= 100);
 
   return (
     <div className="max-w-7xl w-[90%]">
+      <h1 className="text-4xl font-sans font-thin max-w-fit mx-auto mb-6">
+        Loading{allDots[loadingDots] || "..."}
+      </h1>
       <div className="h-16 border-[2px] border-[#343434] rounded-full p-1 overflow-hidden">
         <div
-          className={`rounded-full bg-[#343434] h-full transition-all duration-100 ${
-            startAnimation && styles.innerBar
-          }`}
+          className="rounded-full bg-[#343434] h-full transition-all"
+          style={{ width: loadProgress + "%" }}
         ></div>
       </div>
     </div>

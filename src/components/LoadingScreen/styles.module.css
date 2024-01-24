@@ -1,18 +1,3 @@
-@keyframes widthAnimation {
-  0% {
-    width: 10%;
-  }
-  100% {
-    width: 100%;
-  }
-}
-
-.innerBar {
-  transition: ease-in;
-  animation-name: widthAnimation;
-  animation-duration: 2.5s;
-}
-
 .container {
   aspect-ratio: 1.618;
   width: 90vmin;
