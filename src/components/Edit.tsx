@@ -4,9 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { ChromePicker } from "react-color";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import { AnimatedButton } from "../components";
-import { EnvironmentsType } from "@/canvas";
 
 import ArrowUpSolid from "../../public/icons/AngleUpSolid";
 
@@ -53,11 +51,7 @@ export default function Edit() {
   };
 
   return (
-    <div
-      className={`fixed min-w-[100%] z-10 transition-all duration-500 ${
-        isPanelOpen ? "bottom-0" : "bottom-[-277px]"
-      }`}
-    >
+    <div className="fixed min-w-[100%] z-10 duration-500 bottom-0">
       <div className="bg-[#232323] rounded-t-3xl flex mx-auto gap-4 pt-4 px-4 max-w-max">
         <button
           className={`font-sans p-3 rounded-t-xl transition-all ${
@@ -88,9 +82,13 @@ export default function Edit() {
         </button>
       </div>
 
-      <div className="border-[#464646] border-2 bg-[#232323] max-h-[30vh]">
+      <div
+        className={`border-[#464646] border-2 bg-[#232323] transition-all duration-500 overflow-hidden ${
+          isPanelOpen ? "max-h-screen" : "max-h-0"
+        }`}
+      >
         {editingOptions.colorPicker && (
-          <div className="flex flex-col gap-1">
+          <div className="flex gap-1 m-4 justify-center">
             <ChromePicker
               // @ts-ignore
               width={300}
@@ -101,12 +99,13 @@ export default function Edit() {
                 params.set("color", c.hex.replace("#", ""));
                 router.push(`?${params.toString()}`);
               }}
+              className="color-picker"
             />
           </div>
         )}
 
         {editingOptions.environmentPicker && (
-          <div className="flex flex-col gap-2 min-w-max">
+          <div className="flex flex-col gap-2 min-w-max m-4">
             <AnimatedButton
               onClick={() => {
                 let params = new URLSearchParams(window.location.search);
@@ -118,7 +117,7 @@ export default function Edit() {
               {backgroundEnable ? "Disable" : "Enable"} Background
             </AnimatedButton>
 
-            <div className="overflow-y-box overflow-y-scroll max-h-[50vh] flex flex-col gap-2">
+            <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
               {environments.map((e) => (
                 <AnimatedButton
                   onClick={() => {

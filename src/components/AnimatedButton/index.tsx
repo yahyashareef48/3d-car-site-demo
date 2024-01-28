@@ -9,7 +9,7 @@ type ButtonTypes = {
 export default function AnimatedButton({ right = false, children, onClick }: ButtonTypes) {
   return innerWidth > 1024 ? (
     <button
-      className={`${styles.button} ${right ? styles.right : styles.left}`}
+      className={`${styles.button} ${right ? styles.right : styles.left} font-sans`}
       style={{ pointerEvents: "auto" }}
       onClick={() => onClick()}
     >
