@@ -56,8 +56,10 @@ export default function Edit() {
     <div className="fixed bottom-0 min-w-[100%] z-10">
       <div className="bg-[#232323] rounded-t-3xl flex mx-auto gap-4 pt-4 px-4 max-w-max">
         <button
-          className={`font-sans p-3 rounded-t-xl transition-colors ${
-            editingOptions.colorPicker && "bg-[#464646]"
+          className={`font-sans p-3 rounded-t-xl transition-all ${
+            editingOptions.colorPicker
+              ? "bg-[#464646]"
+              : "hover:bg-[#464646] hover:rounded-full mb-1"
           }`}
           onClick={() => handlePanel("colorPicker")}
         >
@@ -65,8 +67,10 @@ export default function Edit() {
         </button>
 
         <button
-          className={`font-sans p-3 rounded-t-xl transition-colors ${
-            editingOptions.environmentPicker && "bg-[#464646]"
+          className={`font-sans p-3 rounded-t-xl transition-all ${
+            editingOptions.environmentPicker
+              ? "bg-[#464646]"
+              : "hover:bg-[#464646] hover:rounded-full mb-1"
           }`}
           onClick={() => handlePanel("environmentPicker")}
         >
