@@ -53,7 +53,11 @@ export default function Edit() {
   };
 
   return (
-    <div className="fixed bottom-0 min-w-[100%] z-10">
+    <div
+      className={`fixed min-w-[100%] z-10 transition-all duration-500 ${
+        isPanelOpen ? "bottom-0" : "bottom-[-277px]"
+      }`}
+    >
       <div className="bg-[#232323] rounded-t-3xl flex mx-auto gap-4 pt-4 px-4 max-w-max">
         <button
           className={`font-sans p-3 rounded-t-xl transition-all ${
@@ -84,54 +88,52 @@ export default function Edit() {
         </button>
       </div>
 
-      {isPanelOpen && (
-        <div className="border-[#464646] border-2 bg-[#232323] max-h-[30vh]">
-          {editingOptions.colorPicker && (
-            <div className="flex flex-col gap-1">
-              <ChromePicker
-                // @ts-ignore
-                width={300}
-                color={color ? color : "#fff"}
-                onChangeComplete={(c) => {
-                  setColor(c.hex);
-                  let params = new URLSearchParams(window.location.search);
-                  params.set("color", c.hex.replace("#", ""));
-                  router.push(`?${params.toString()}`);
-                }}
-              />
-            </div>
-          )}
+      <div className="border-[#464646] border-2 bg-[#232323] max-h-[30vh]">
+        {editingOptions.colorPicker && (
+          <div className="flex flex-col gap-1">
+            <ChromePicker
+              // @ts-ignore
+              width={300}
+              color={color ? color : "#fff"}
+              onChangeComplete={(c) => {
+                setColor(c.hex);
+                let params = new URLSearchParams(window.location.search);
+                params.set("color", c.hex.replace("#", ""));
+                router.push(`?${params.toString()}`);
+              }}
+            />
+          </div>
+        )}
 
-          {editingOptions.environmentPicker && (
-            <div className="flex flex-col gap-2 min-w-max">
-              <AnimatedButton
-                onClick={() => {
-                  let params = new URLSearchParams(window.location.search);
-                  params.set("bg", (!backgroundEnable).toString());
-                  router.push(`?${params.toString()}`);
-                  setBackgroundEnable(!backgroundEnable);
-                }}
-              >
-                {backgroundEnable ? "Disable" : "Enable"} Background
-              </AnimatedButton>
+        {editingOptions.environmentPicker && (
+          <div className="flex flex-col gap-2 min-w-max">
+            <AnimatedButton
+              onClick={() => {
+                let params = new URLSearchParams(window.location.search);
+                params.set("bg", (!backgroundEnable).toString());
+                router.push(`?${params.toString()}`);
+                setBackgroundEnable(!backgroundEnable);
+              }}
+            >
+              {backgroundEnable ? "Disable" : "Enable"} Background
+            </AnimatedButton>
 
-              <div className="overflow-y-box overflow-y-scroll max-h-[50vh] flex flex-col gap-2">
-                {environments.map((e) => (
-                  <AnimatedButton
-                    onClick={() => {
-                      let params = new URLSearchParams(window.location.search);
-                      params.set("e", e.toLowerCase());
-                      router.push(`?${params.toString()}`);
-                    }}
-                  >
-                    {e}
-                  </AnimatedButton>
-                ))}
-              </div>
+            <div className="overflow-y-box overflow-y-scroll max-h-[50vh] flex flex-col gap-2">
+              {environments.map((e) => (
+                <AnimatedButton
+                  onClick={() => {
+                    let params = new URLSearchParams(window.location.search);
+                    params.set("e", e.toLowerCase());
+                    router.push(`?${params.toString()}`);
+                  }}
+                >
+                  {e}
+                </AnimatedButton>
+              ))}
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
