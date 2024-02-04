@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { ChromePicker } from "react-color";
-import { motion, AnimatePresence } from "framer-motion";
-import { AnimatedButton } from "../components";
+import { AnimatedButton, Dropzone } from "../components";
 
 import ArrowUpSolid from "../../public/icons/AngleUpSolid";
 
@@ -16,7 +15,6 @@ type editingOptionsType = {
 
 export default function Edit() {
   const router = useRouter();
-  const searchParam = useSearchParams();
   const [color, setColor] = useState("");
   const [backgroundEnable, setBackgroundEnable] = useState(false);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -50,8 +48,6 @@ export default function Edit() {
     });
   };
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
   return (
     <div className="fixed min-w-[100%] z-10 duration-500 bottom-0">
       <div className="bg-[#232323] rounded-t-3xl flex mx-auto gap-4 pt-4 px-4 max-w-max">
@@ -63,7 +59,7 @@ export default function Edit() {
           }`}
           onClick={() => handlePanel("colorPicker")}
         >
-          Material Picker
+          Material's
         </button>
 
         <button
@@ -90,7 +86,7 @@ export default function Edit() {
         }`}
       >
         {editingOptions.colorPicker && (
-          <div className="flex gap-1 m-4 justify-center">
+          <div className="flex gap-4 m-4 justify-center overflow-x-scroll max-w-[100vw] mx-auto">
             <ChromePicker
               // @ts-ignore
               width={300}
@@ -104,31 +100,18 @@ export default function Edit() {
               className="color-picker"
             />
 
-            <input
-              ref={inputRef}
-              type="file"
-              accept="image/png, image/jpeg, image/avif"
-              name="image"
-              onChange={(e) => {
-                if (e.target.files) {
-                  let url = URL.createObjectURL(e.target.files[0]);
+            <div className="flex flex-col gap-4 min-h-full max-w-max min-w-[300px]">
+              <Dropzone />
+              <AnimatedButton
+                onClick={() => {
                   let params = new URLSearchParams(window.location.search);
-                  params.set("material", url);
+                  params.set("material", "remove_texture");
                   router.push(`?${params.toString()}`);
-                }
-              }}
-            />
-
-            <button
-              onClick={(e) => {
-                let params = new URLSearchParams(window.location.search);
-                params.set("material", "remove_texture");
-                router.push(`?${params.toString()}`);
-                if (inputRef.current) inputRef.current.value = "";
-              }}
-            >
-              Remove Texture
-            </button>
+                }}
+              >
+                Remove Texture
+              </AnimatedButton>
+            </div>
           </div>
         )}
 

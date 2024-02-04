@@ -2,11 +2,10 @@
 
 import { Analytics } from "@vercel/analytics/react";
 import Canvas from "@/canvas";
-import { Edit, Intro, Navbar } from "@/components";
+import { Edit, Intro, Navbar, LoadingScreen } from "@/components";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Home() {
   const searchParam = useSearchParams();

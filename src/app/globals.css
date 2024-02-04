@@ -29,10 +29,6 @@ body * {
   user-select: none;
 }
 
-.color-picker * {
-  font-family: sans-serif;
-}
-
 .overflow-y-box {
   border: solid 2.5px #181a1b;
   /* border-bottom: solid 2.5px #181a1b; */
@@ -40,5 +36,15 @@ body * {
   border-radius: 6px;
 }
 .overflow-y-box::-webkit-scrollbar {
+  display: none;
+}
+
+.color-picker * {
+  font-family: sans-serif;
+}
+.color-picker > div:nth-child(2) > div > div:nth-child(1) {
+  display: none;
+}
+.color-picker > div:nth-child(2) > div > div:nth-child(2) > div:nth-child(2) {
   display: none;
 }
