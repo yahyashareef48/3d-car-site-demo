@@ -39,6 +39,17 @@ body * {
   display: none;
 }
 
+.overflow-x-box {
+  overflow-x: scroll;
+}
+.overflow-x-box::-webkit-scrollbar {
+  height: 5px;
+}
+.overflow-x-box::-webkit-scrollbar-thumb {
+  background-color: #464646;
+  border-radius: 9999px;
+}
+
 .color-picker * {
   font-family: sans-serif;
 }

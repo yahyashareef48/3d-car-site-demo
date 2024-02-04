@@ -86,31 +86,32 @@ export default function Edit() {
         }`}
       >
         {editingOptions.colorPicker && (
-          <div className="flex gap-4 m-4 justify-center overflow-x-scroll max-w-[100vw] mx-auto">
-            <ChromePicker
-              // @ts-ignore
-              width={300}
-              color={color ? color : "#fff"}
-              onChangeComplete={(c) => {
-                setColor(c.hex);
-                let params = new URLSearchParams(window.location.search);
-                params.set("material", c.hex.replace("#", ""));
-                router.push(`?${params.toString()}`);
-              }}
-              className="color-picker"
-            />
-
-            <div className="flex flex-col gap-4 min-h-full max-w-max min-w-[300px]">
-              <Dropzone />
-              <AnimatedButton
-                onClick={() => {
+          <div className="max-w-[100vw] overflow-x-box">
+            <div className="flex gap-4 m-4 justify-center w-max sm:mx-auto">
+              <ChromePicker
+                // @ts-ignore
+                width={300}
+                color={color ? color : "#fff"}
+                onChangeComplete={(c) => {
+                  setColor(c.hex);
                   let params = new URLSearchParams(window.location.search);
-                  params.set("material", "remove_texture");
+                  params.set("material", c.hex.replace("#", ""));
                   router.push(`?${params.toString()}`);
                 }}
-              >
-                Remove Texture
-              </AnimatedButton>
+                className="color-picker"
+              />
+              <div className="flex flex-col gap-4 min-h-full max-w-max min-w-[300px]">
+                <Dropzone />
+                <AnimatedButton
+                  onClick={() => {
+                    let params = new URLSearchParams(window.location.search);
+                    params.set("material", "remove_texture");
+                    router.push(`?${params.toString()}`);
+                  }}
+                >
+                  Remove Texture
+                </AnimatedButton>
+              </div>
             </div>
           </div>
         )}
