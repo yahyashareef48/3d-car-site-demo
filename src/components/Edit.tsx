@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ChromePicker } from "react-color";
 import { motion, AnimatePresence } from "framer-motion";
 import { AnimatedButton } from "../components";
@@ -50,6 +50,8 @@ export default function Edit() {
     });
   };
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <div className="fixed min-w-[100%] z-10 duration-500 bottom-0">
       <div className="bg-[#232323] rounded-t-3xl flex mx-auto gap-4 pt-4 px-4 max-w-max">
@@ -61,7 +63,7 @@ export default function Edit() {
           }`}
           onClick={() => handlePanel("colorPicker")}
         >
-          Color picker
+          Material Picker
         </button>
 
         <button
@@ -96,11 +98,37 @@ export default function Edit() {
               onChangeComplete={(c) => {
                 setColor(c.hex);
                 let params = new URLSearchParams(window.location.search);
-                params.set("color", c.hex.replace("#", ""));
+                params.set("material", c.hex.replace("#", ""));
                 router.push(`?${params.toString()}`);
               }}
               className="color-picker"
             />
+
+            <input
+              ref={inputRef}
+              type="file"
+              accept="image/png, image/jpeg, image/avif"
+              name="image"
+              onChange={(e) => {
+                if (e.target.files) {
+                  let url = URL.createObjectURL(e.target.files[0]);
+                  let params = new URLSearchParams(window.location.search);
+                  params.set("material", url);
+                  router.push(`?${params.toString()}`);
+                }
+              }}
+            />
+
+            <button
+              onClick={(e) => {
+                let params = new URLSearchParams(window.location.search);
+                params.set("material", "remove_texture");
+                router.push(`?${params.toString()}`);
+                if (inputRef.current) inputRef.current.value = "";
+              }}
+            >
+              Remove Texture
+            </button>
           </div>
         )}
 

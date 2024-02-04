@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useSearchParams, useRouter } from "next/navigation";
+import { TextureLoader } from "three";
 
 export default function TeslaModel3() {
   const router = useRouter();
@@ -14,14 +15,28 @@ export default function TeslaModel3() {
   // const router = useRouter();
 
   const gltf = useGLTF("/3d-models/tesla_model_3.glb"); // Use the useGLTF hook from drei to load the GLTF model
+  const textureLoader = new TextureLoader();
 
+  const material = searchParam.get("material");
   // Traverse through the GLTF model
   gltf.scene.traverse((child: any) => {
     // If the child is a mesh
     if (child.type === "Mesh") {
       // If the material name of the child matches the state material name
       if (child.material.name === materialName) {
-        child.material.color.set(`#${searchParam.get("color")}`); // Set the color of the material to the color from the URL search parameters
+        // Load the image and set it as the map (texture) of the material
+        if (material?.startsWith("blob") && material) {
+          textureLoader.load(material, (texture) => {
+            child.material.map = texture;
+            child.material.needsUpdate = true; // Update the material
+          });
+        } else if (material === "remove_texture" && child.material.map) {
+          child.material.map.dispose(); // Dispose of the texture
+          child.material.map = null; // Remove the texture from the material
+          child.material.needsUpdate = true; // Update the material
+        } else {
+          child.material.color.set(`#${material}`); // Set the color of the material to the color from the URL search parameters
+        }
       }
     }
   });
