@@ -6,6 +6,7 @@ import { ChromePicker } from "react-color";
 import { AnimatedButton, Dropzone } from "../components";
 
 import ArrowUpSolid from "../../public/icons/AngleUpSolid";
+import generateAiImage from "@/generateAiImage";
 
 type editingOptionsType = {
   colorPicker: boolean;
@@ -22,6 +23,8 @@ export default function Edit() {
     colorPicker: true,
     environmentPicker: false,
   });
+  const [promptForImage, setPromptForImage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const environments = [
     "Apartment",
@@ -112,6 +115,32 @@ export default function Edit() {
                   Remove Texture
                 </AnimatedButton>
               </div>
+
+              {/* <div>
+                <input
+                  type="text"
+                  value={promptForImage}
+                  onChange={(e) => setPromptForImage(e.target.value)}
+                  className="text-black"
+                />
+
+                <AnimatedButton
+                  disabled={isDisabled}
+                  onClick={async () => {
+                    setIsDisabled(true);
+
+                    const image = await generateAiImage(promptForImage);
+
+                    let params = new URLSearchParams(window.location.search);
+                    params.set("material", image);
+                    router.push(`?${params.toString()}`);
+
+                    setIsDisabled(false);
+                  }}
+                >
+                  Generate Image
+                </AnimatedButton>
+              </div> */}
             </div>
           </div>
         )}

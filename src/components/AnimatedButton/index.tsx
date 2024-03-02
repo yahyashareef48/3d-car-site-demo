@@ -1,10 +1,11 @@
 import styles from "./index.module.css";
 
 type ButtonTypes = {
-  right?: false | true;
-  children: any;
-  onClick: any;
+  right?: boolean;
+  children: React.ReactNode;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
+  disabled?: boolean;
 };
 
 export default function AnimatedButton({
@@ -12,12 +13,14 @@ export default function AnimatedButton({
   children,
   onClick,
   className = "",
+  disabled = false,
 }: ButtonTypes) {
   return innerWidth > 1024 ? (
     <button
       className={`${styles.button} ${right ? styles.right : styles.left} font-sans ${className}`}
       style={{ pointerEvents: "auto" }}
-      onClick={() => onClick()}
+      onClick={(e) => onClick(e)}
+      disabled={disabled}
     >
       {children}
     </button>
@@ -25,7 +28,8 @@ export default function AnimatedButton({
     <button
       className={`${styles.button} ${right ? styles.right : styles.left} font-sans ${className}`}
       style={{ pointerEvents: "auto" }}
-      onClick={() => onClick()}
+      onClick={(e) => onClick(e)}
+      disabled={disabled}
     >
       {children}
     </button>
