@@ -7,7 +7,8 @@ import { TextureLoader } from "three";
 
 export default function TeslaModel3() {
   const router = useRouter();
-  const [materialName, setMaterialName] = useState(""); // Initialize state for the material name
+  const [objectUUID, setObjectUUID] = useState(""); // Initialize state for the object UUID
+
   const coolDown = useRef(false);
 
   const searchParam = useSearchParams(); // Use the useSearchParams hook to get the current URL search parameters
@@ -22,8 +23,17 @@ export default function TeslaModel3() {
   gltf.scene.traverse((child: any) => {
     // If the child is a mesh
     if (child.type === "Mesh") {
+      try {
+        console.log(child.geometry.faceVertexUvs[0]);
+      } catch (error) {
+        console.log(error)
+      }
+
       // If the material name of the child matches the state material name
-      if (child.material.name === materialName) {
+      if (objectUUID === child.userData.new_unique_id) {
+        // Clone the material
+        child.material = child.material.clone();
+
         // Load the image and set it as the map (texture) of the material
         if (material?.startsWith("blob") && material) {
           textureLoader.load(material, (texture) => {
@@ -57,14 +67,14 @@ export default function TeslaModel3() {
       onDoubleClick={(e: any) => {
         // Check if the cool down period is not active
         if (!coolDown.current) {
-          setMaterialName(e.object.material.name); // If not in cooldown, set the material name state to the name of the clicked object's material
+          setObjectUUID(e.object.userData.new_unique_id); // If not in cooldown, set the object UUID state to the name of the clicked object's UUID
 
           coolDown.current = true; // Activate the cool down period
 
           // After 1 second (1000 milliseconds), deactivate the cool down period
           setTimeout(() => {
             coolDown.current = false;
-          }, 1000);
+          }, 0);
         }
       }}
     >
