@@ -23,11 +23,11 @@ export default function TeslaModel3() {
   gltf.scene.traverse((child: any) => {
     // If the child is a mesh
     if (child.type === "Mesh") {
-      try {
-        console.log(child.geometry.faceVertexUvs[0]);
-      } catch (error) {
-        console.log(error)
-      }
+      // try {
+      //   console.log(child.geometry.faceVertexUvs[0]);
+      // } catch (error) {
+      //   console.log(error)
+      // }
 
       // If the material name of the child matches the state material name
       if (objectUUID === child.userData.new_unique_id) {
