@@ -5,7 +5,7 @@ import { useGLTF } from "@react-three/drei";
 import { useSearchParams, useRouter } from "next/navigation";
 import { TextureLoader } from "three";
 
-export default function TeslaModel3() {
+export default function TeslaModel3({ material }: { material: string }) {
   const router = useRouter();
   const [objectUUID, setObjectUUID] = useState(""); // Initialize state for the object UUID
 
@@ -18,38 +18,40 @@ export default function TeslaModel3() {
   const gltf = useGLTF("/3d-models/tesla_model_3.glb"); // Use the useGLTF hook from drei to load the GLTF model
   const textureLoader = new TextureLoader();
 
-  const material = searchParam.get("material");
-  // Traverse through the GLTF model
-  gltf.scene.traverse((child: any) => {
-    // If the child is a mesh
-    if (child.type === "Mesh") {
-      // try {
-      //   console.log(child.geometry.faceVertexUvs[0]);
-      // } catch (error) {
-      //   console.log(error)
-      // }
+  useEffect(() => {
+    // Traverse through the GLTF model
+    gltf.scene.traverse((child: any) => {
+      // If the child is a mesh
+      if (child.type === "Mesh") {
+        // try {
+        //   console.log(child.geometry.faceVertexUvs[0]);
+        // } catch (error) {
+        //   console.log(error)
+        // }
 
-      // If the material name of the child matches the state material name
-      if (objectUUID === child.userData.new_unique_id) {
-        // Clone the material
-        child.material = child.material.clone();
+        // If the material name of the child matches the state material name
+        if (objectUUID === child.userData.new_unique_id) {
+          // Clone the material
+          child.material = child.material.clone();
 
-        // Load the image and set it as the map (texture) of the material
-        if (material?.startsWith("blob") && material) {
-          textureLoader.load(material, (texture) => {
-            child.material.map = texture;
+          // Load the image and set it as the map (texture) of the material
+          if (material?.startsWith("blob") && material) {
+            textureLoader.load(material, (texture) => {
+              child.material.map = texture;
+              child.material.needsUpdate = true; // Update the material
+            });
+          } else if (material === "remove_texture" && child.material.map) {
+            console.log("in2: ", material);
+            child.material.map.dispose(); // Dispose of the texture
+            child.material.map = null; // Remove the texture from the material
             child.material.needsUpdate = true; // Update the material
-          });
-        } else if (material === "remove_texture" && child.material.map) {
-          child.material.map.dispose(); // Dispose of the texture
-          child.material.map = null; // Remove the texture from the material
-          child.material.needsUpdate = true; // Update the material
-        } else {
-          child.material.color.set(`#${material}`); // Set the color of the material to the color from the URL search parameters
+          } else {
+            child.material.color.set(material); // Set the color of the material to the color from the URL search parameters
+          }
         }
       }
-    }
-  });
+    });
+  }, [material, objectUUID]);
 
   useEffect(() => {
     let params = new URLSearchParams(window.location.search);

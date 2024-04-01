@@ -5,15 +5,13 @@ import { useDropzone } from "react-dropzone";
 
 type Accept = "image/jpeg" | "image/png" | "image/avif";
 
-export default function Dropzone() {
+export default function Dropzone({ setImage }: { setImage: (i: string) => void }) {
   const router = useRouter();
 
   const onDrop = useCallback((acceptedFiles: any) => {
     if (acceptedFiles[0]) {
       let url = URL.createObjectURL(acceptedFiles[0]);
-      let params = new URLSearchParams(window.location.search);
-      params.set("material", url);
-      router.push(`?${params.toString()}`);
+      setImage(url);
     }
   }, []);
 

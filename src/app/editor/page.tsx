@@ -45,11 +45,7 @@ export default function Editor() {
 
       <Navbar />
 
-      <Edit />
-
-      <div className="z-0 h-full absolute w-full top-0 left-0">
-        <Canvas />
-      </div>
+      <Canvas />
     </main>
   );
 }

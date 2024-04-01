@@ -14,7 +14,7 @@ type editingOptionsType = {
   [key: string]: boolean | undefined;
 };
 
-export default function Edit() {
+export default function Edit({ setMaterial }: { setMaterial: (m: string) => void }) {
   const router = useRouter();
   const [color, setColor] = useState("");
   const [backgroundEnable, setBackgroundEnable] = useState(false);
@@ -23,8 +23,6 @@ export default function Edit() {
     colorPicker: true,
     environmentPicker: false,
   });
-  const [promptForImage, setPromptForImage] = useState("");
-  const [isDisabled, setIsDisabled] = useState(false);
 
   const environments = [
     "Apartment",
@@ -97,50 +95,21 @@ export default function Edit() {
                 color={color ? color : "#fff"}
                 onChangeComplete={(c) => {
                   setColor(c.hex);
-                  let params = new URLSearchParams(window.location.search);
-                  params.set("material", c.hex.replace("#", ""));
-                  router.push(`?${params.toString()}`);
+                  setMaterial(c.hex);
                 }}
                 className="color-picker"
               />
               <div className="flex flex-col gap-4 min-h-full max-w-max min-w-[300px]">
-                <Dropzone />
+                <Dropzone setImage={setMaterial} />
+
                 <AnimatedButton
                   onClick={() => {
-                    let params = new URLSearchParams(window.location.search);
-                    params.set("material", "remove_texture");
-                    router.push(`?${params.toString()}`);
+                    setMaterial("remove_texture");
                   }}
                 >
                   Remove Texture
                 </AnimatedButton>
               </div>
-
-              {/* <div>
-                <input
-                  type="text"
-                  value={promptForImage}
-                  onChange={(e) => setPromptForImage(e.target.value)}
-                  className="text-black"
-                />
-
-                <AnimatedButton
-                  disabled={isDisabled}
-                  onClick={async () => {
-                    setIsDisabled(true);
-
-                    const image = await generateAiImage(promptForImage);
-
-                    let params = new URLSearchParams(window.location.search);
-                    params.set("material", image);
-                    router.push(`?${params.toString()}`);
-
-                    setIsDisabled(false);
-                  }}
-                >
-                  Generate Image
-                </AnimatedButton>
-              </div> */}
             </div>
           </div>
         )}
