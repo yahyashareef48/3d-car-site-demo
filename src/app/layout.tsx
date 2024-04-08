@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "3D Car with Three.js",
-  description: "3D Car Experience with Three.js",
+  title: "3D Car Designer",
+  description: "Design and Esperance Your Dream Car in 3D",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
