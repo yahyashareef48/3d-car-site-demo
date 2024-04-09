@@ -11,15 +11,15 @@ function Login() {
     e.preventDefault();
 
     try {
-      await fetch("http://localhost:8080/login", {
+      await fetch("http://localhost:8080/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password, name }),
-      });
+      }).catch((error) => console.error("Error:", error));
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Error during login: ", error);
     }
   };
 
