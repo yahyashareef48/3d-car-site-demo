@@ -28,7 +28,7 @@ function Login() {
     <>
       <Navbar />
 
-      <section className="min-h-screen min-w-full flex justify-center items-center p-4">
+      <section className="min-h-screen min-w-full flex justify-center items-center p-4 pt-16">
         <div className="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-[#232323] rounded-lg shadow-xl">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Sign up to 3D Car Designer
